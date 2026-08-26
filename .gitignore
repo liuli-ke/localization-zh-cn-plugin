@@ -1,0 +1,21 @@
+**/*.iml
+
+.idea
+.DS_Store
+.vscode
+bin/
+
+# maven stuff
+target
+
+# jenkins stuff
+work
+
+.classpath
+.settings/
+.bin/
+.factorypath
+.project
+
+# private files
+env.sh
