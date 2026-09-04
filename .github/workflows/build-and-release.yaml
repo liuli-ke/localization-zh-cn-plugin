@@ -55,21 +55,17 @@ jobs:
           md5sum ${{ steps.hpi.outputs.HPI_PATH }} | awk '{print $1}' > md5sum
           # 该文件名为 "md5sum"，无扩展名
 
-      - name: Create Release and upload assets
+      - name: 创建 Release 并上传文件
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.VERSION }}
+          name: ${{ steps.version.outputs.VERSION }}
+          body: "从提交自动构建 ${{ github.sha }}"
+          target_commitish: ${{ github.sha }}   # 或指定固定 commit，如 d967d49...
+          files: |
+            target/localization-zh-cn.hpi
+            md5sum
+          draft: false
+          prerelease: false
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VERSION: ${{ steps.version.outputs.VERSION }}
-        run: |
-          # 创建 Release（如果已存在则忽略错误）
-          gh release create "$VERSION" \
-            --title "$VERSION" \
-            --notes "Automated build from commit $(git rev-parse HEAD)" \
-            --target "${{ github.sha }}" \
-            --draft=false \
-            --prerelease=false || true
-          
-          # 上传 HPI 文件
-          gh release upload "$VERSION" "${{ steps.hpi.outputs.HPI_PATH }}" --clobber
-          
-          # 上传 MD5 文件
-          gh release upload "$VERSION" md5sum --clobber
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
