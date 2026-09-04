@@ -1,0 +1,11 @@
+<div>
+  在项目、用户、视图和构建描述中，Jenkins 允许用户输入自由文本以描述某些内容。此配置决定如何将这些自由文本转换为 HTML。默认情况下，Jenkins 将文本视为 HTML 并按原样使用（这主要是出于向后兼容性的考虑）。
+
+  <p>
+    尽管这很方便，并且人们经常用它来嵌入 &lt;iframe>、&lt;script> 等以整合来自其他来源的数据，但此功能可能使恶意用户发起
+    <a href="https://en.wikipedia.org/wiki/Cross-site_scripting">
+      XSS 攻击
+    </a>
+    。如果风险大于收益，可以安装并使用额外的格式化插件。
+  </p>
+</div>
