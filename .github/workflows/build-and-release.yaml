@@ -1,0 +1,75 @@
+name: Build and Release
+
+on:
+  push:
+    branches:
+      - master           # master 分支推送时自动触发
+  workflow_dispatch:     # 允许手动选择分支构建
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: maven:3.9.16-eclipse-temurin-17   # 精确指定 Maven 3.9.16 + JDK 17
+    permissions:
+      contents: write    # 允许创建 Release 和上传资产
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 获取所有历史，以便正确计数提交
+
+      - name: Fix git safe.directory
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Build with Maven
+        run: mvn clean package -DskipTests   # 根据实际需要调整
+
+      - name: Calculate version
+        id: version
+        run: |
+          # 计算当前分支的提交总数
+          COMMIT_COUNT=$(git rev-list --count HEAD)
+          # 获取当前 HEAD 的短哈希 (长度 7)
+          SHORT_HASH=$(git rev-parse --short=7 HEAD)
+          # 拼接版本号，例如 "1355.v45e2ea6"
+          VERSION="${COMMIT_COUNT}.v${SHORT_HASH}"
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+          echo "Version computed: $VERSION"
+
+      - name: Locate HPI file
+        id: hpi
+        run: |
+          # 假设插件 artifactId 为 localization-zh-cn，打包后为 target/localization-zh-cn.hpi
+          HPI_PATH="target/localization-zh-cn.hpi"
+          if [ ! -f "$HPI_PATH" ]; then
+            echo "Error: HPI file not found at $HPI_PATH"
+            exit 1
+          fi
+          echo "HPI_PATH=$HPI_PATH" >> $GITHUB_OUTPUT
+
+      - name: Generate MD5 checksum file
+        run: |
+          # 生成 MD5 校验和，格式为 "md5 文件名"，只保留 md5 值
+          md5sum ${{ steps.hpi.outputs.HPI_PATH }} | awk '{print $1}' > md5sum
+          # 该文件名为 "md5sum"，无扩展名
+
+      - name: Create Release and upload assets
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.version.outputs.VERSION }}
+        run: |
+          # 创建 Release（如果已存在则忽略错误）
+          gh release create "$VERSION" \
+            --title "$VERSION" \
+            --notes "Automated build from commit $(git rev-parse HEAD)" \
+            --target "${{ github.sha }}" \
+            --draft=false \
+            --prerelease=false || true
+          
+          # 上传 HPI 文件
+          gh release upload "$VERSION" "${{ steps.hpi.outputs.HPI_PATH }}" --clobber
+          
+          # 上传 MD5 文件
+          gh release upload "$VERSION" md5sum --clobber
