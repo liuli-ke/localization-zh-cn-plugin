@@ -188,7 +188,7 @@
     <dependency>
       <groupId>io.jenkins.plugins</groupId>
       <artifactId>localization-support</artifactId>
-      <version>1.2</version>
+      <version>1.41.v186a_c1569458</version>
     </dependency>
   </dependencies>
 
