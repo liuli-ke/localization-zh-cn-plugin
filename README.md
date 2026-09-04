@@ -1,32 +1,17 @@
-## Simplified Chinese Plugin
-[![Jenkins Plugin](https://img.shields.io/jenkins/plugin/v/localization-zh-cn.svg)](https://plugins.jenkins.io/localization-zh-cn)
-[![Jenkins Plugin Installs](https://img.shields.io/jenkins/plugin/i/localization-zh-cn.svg?color=blue)](https://plugins.jenkins.io/localization-zh-cn)
-[![Gitter](https://badges.gitter.im/jenkinsci/localization-zh-cn-plugin.svg)](https://gitter.im/jenkinsci/localization-zh-cn-plugin)
+# 关于此项目
+
+## 来源
+
+当前项目是在 [Release 371.v23851f835d6b_ · jenkinsci/localization-zh-cn-plugin](https://github.com/jenkinsci/localization-zh-cn-plugin/releases/tag/371.v23851f835d6b_) 的基础上增加了，自己需要的汉化内容，如果无特殊需要，请继续使用官方版本
+
+## 关于翻译
+
+翻译内容是根据英文内容，由翻译软件直接翻译，可能不准确，仅供参考！
+
+翻译方法、构建环境等参考：[《汉化指南》](./汉化指南.md)
 
 
-Simplified Chinese Localization for Jenkins core and plugins.  
-See [JEP-216](https://github.com/jenkinsci/jep/blob/master/jep/216/README.adoc) for design details.
 
-## Out of the box
+## 最后声明
 
-We offer you an out-of-the-box solution. If you're going to install a fresh Jenkins, please [check here](https://github.com/jenkins-zh/docker-zh).
-
-## How-To Guides
-
-Here are some guides about [how to contribute localization](https://www.jenkins.io/doc/developer/internationalization/) for a Jenkins plugin.
-
-[jcli](https://github.com/jenkins-zh/jenkins-cli) could help you upload this plugin into your
-Jenkins. The command is `jcli plugin upload`.
-
-## Contribution
-
-If you are interested in localization, please check [Chinese Localization SIG](https://www.jenkins.io/sigs/chinese-localization/) first.
-
-All Chinese characters will convert to ASCII. It's hard to read. So you could use [online tools](https://native2ascii.net/).
-
-Everyone should follow the [translation specification](https://github.com/jenkins-zh/translation-spec/blob/master/specification.md).
-
-## Actions
-
-We use [git-backup-actions](https://github.com/jenkins-zh/git-backup-actions/) to backup this repo into 
-[gitee](https://gitee.com/jenkins-zh/localization-zh-cn-plugin).
+当前项目是个人需要修改使用，如果无特殊需要，还是建议使用官方版本！因为个人英语不好，翻译内容全部来自翻译软件！
