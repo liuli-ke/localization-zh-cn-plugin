@@ -1,0 +1,32 @@
+<div>
+  您可以使用通配符，例如 'module/dist/**/*.zip'。有关确切格式，请参阅
+  <a href="https://ant.apache.org/manual/Types/fileset.html">
+    Ant fileset 的 includes 属性
+  </a>
+  ——不同之处在于，仅支持 <code>","</code>（<em>逗号</em>）作为分隔符。基础目录为
+  <a href="ws/">工作区</a>。您只能归档位于您工作区中的文件。
+</div>
+
+<br />
+<div>
+  <p>以下是流水线中使用的一些示例：</p>
+  <ul>
+    <li>
+      如何归档特定文件夹中的多个构件：
+
+      <pre><code>archiveArtifacts artifacts: 'target/*.jar'</code></pre>
+    </li>
+    <br />
+
+    <li>
+      如何使用不同模式归档多个构件：
+      <pre><code>archiveArtifacts artifacts: 'target/*.jar, target/*.war'</code></pre>
+    </li>
+    <br />
+    <li>
+      如何归档多个嵌套构件：
+      <pre><code>archiveArtifacts artifacts: '**/*.jar'</code></pre>
+    </li>
+    <br />
+  </ul>
+</div>

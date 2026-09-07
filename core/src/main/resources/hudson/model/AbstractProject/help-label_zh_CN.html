@@ -1,0 +1,191 @@
+<div>
+  定义逻辑表达式，用于确定哪些代理可以执行此项目的构建。针对每个可用代理的名称和标签测试此表达式时，结果将为
+  <i>true</i>
+  或
+  <i>false</i>
+  。如果表达式的计算结果为
+  <i>true</i>
+  ，则该代理将被允许执行此项目的构建。
+  <p>
+    如果此项目应始终在特定代理或内置节点上构建，则可以分别输入代理名称或
+    <code>built-in</code>
+    。
+  </p>
+
+  <p>
+    但通常情况下，应避免在此处使用代理的
+    <i>名称</i>
+    ，而应使用代理的
+    <i>标签</i>
+    。如每个代理的配置页面以及主节点的
+    <i>系统配置</i>
+    页面所述，标签可用于表示代理运行的操作系统、CPU 架构或任何其他特性。
+    <br />
+    使用标签可以避免在添加、移除或重命名代理时重新配置此处输入的标签表达式。
+  </p>
+
+  <p>
+    标签表达式可以很简单，只需输入单个
+    <b>标签</b>
+    或
+    <b>代理名称</b>
+    ，例如
+    <code>android-builder</code>
+    或
+    <code>linux-machine-42</code>
+    。
+    <br />
+    您也可以使用各种
+    <i>运算符</i>
+    来创建更复杂的表达式。
+  </p>
+
+  <h3>支持的运算符</h3>
+  支持以下运算符，按优先级从高到低排列：
+  <dl>
+    <dt><code>(expression)</code></dt>
+    <dd>
+      括号 — 用于显式定义表达式的结合性
+    </dd>
+
+    <dt><code>!expression</code></dt>
+    <dd>
+      NOT — 取反；表达式
+      <code>expression</code>
+      的结果
+      <b>不得</b>
+      为 true
+    </dd>
+
+    <dt><code>a &amp;&amp; b</code></dt>
+    <dd>
+      AND —
+      <b>两者</b>
+      表达式
+      <code>a</code>
+      和
+      <code>b</code>
+      都必须为 true
+    </dd>
+
+    <dt><code>a || b</code></dt>
+    <dd>
+      OR —
+      <b>任一</b>
+      表达式
+      <code>a</code>
+      或
+      <code>b</code>
+      为 true 即可
+    </dd>
+
+    <dt><code>a -> b</code></dt>
+    <dd>
+      “蕴含”运算符 — 等价于
+      <code>!a || b</code>
+      。
+      <br />
+      例如，
+      <code>windows -> x64</code>
+      可以理解为“如果使用 Windows 代理，则该代理
+      <i>必须</i>
+      是 64 位的”，同时仍允许此项目在
+      <i>没有</i>
+      <code>windows</code>
+      标签的任何代理上执行，无论它们是否也具有
+      <code>x64</code>
+      标签
+    </dd>
+
+    <dt><code>a &lt;-> b</code></dt>
+    <dd>
+      “当且仅当”运算符 — 等价于
+      <code>a &amp;&amp; b || !a &amp;&amp; !b</code>
+      <br />
+      例如，
+      <code>windows &lt;-> dc2</code>
+      可以理解为“如果使用 Windows 代理，则该代理
+      <i>必须</i>
+      位于数据中心 2；但如果使用非 Windows 代理，则
+      <i>不得</i>
+      位于数据中心 2”
+    </dd>
+  </dl>
+
+  <h3>注意事项</h3>
+  <ul>
+    <li>
+      所有运算符均为左结合，即
+      <code>a -> b -> c</code>
+      等价于
+      <code>(a -> b) -> c</code>
+      。
+    </li>
+    <li>
+      如果标签或代理名称包含可能与运算符语法冲突的字符，可以用引号括起来。
+      <br />
+      例如，
+      <code>"osx (10.11)" || "Windows Server"</code>
+      。
+    </li>
+    <li>
+      表达式可以不使用空格编写，但建议包含空格以提高可读性；Jenkins 在计算表达式时会忽略空格。
+    </li>
+    <li>
+      不支持使用通配符（如
+      <code>*</code>
+      或
+      <code>?</code>
+      ）或正则表达式匹配标签或代理名称。
+    </li>
+    <li>
+      空表达式的结果始终为
+      <i>true</i>
+      ，即匹配所有代理。
+    </li>
+  </ul>
+
+  <h3>示例</h3>
+  <dl>
+    <dt><code>built-in</code></dt>
+    <dd>此项目的构建只能在内置节点上执行</dd>
+    <dd></dd>
+
+    <dt><code>linux-machine-42</code></dt>
+    <dd>
+      此项目的构建只能在名称为
+      <code>linux-machine-42</code>
+      的代理上执行（或者任何恰好拥有名为
+      <code>linux-machine-42</code>
+      标签的机器）
+    </dd>
+
+    <dt><code>linux || macos</code></dt>
+    <dd>
+      此项目的构建可以在具有
+      <code>linux</code>
+      标签
+      <i>或</i>
+      <code>macos</code>
+      标签的任何代理上执行（假设运行 Linux 和 macOS 的代理已分配了相应的标签）。请注意，分隔符是
+      <code>||</code>
+      ，而不是逗号
+    </dd>
+
+    <dt><code>windows &amp;&amp; jdk9</code></dt>
+    <dd>
+      此项目的构建只能在已安装 Java 开发工具包版本 9 的任何 Windows 代理上执行（假设安装了 JDK 9 的代理已被赋予
+      <code>jdk9</code>
+      标签）
+    </dd>
+
+    <dt><code>postgres &amp;&amp; !vm &amp;&amp; (linux || freebsd)</code></dt>
+    <dd>
+      此项目的构建只能在 Linux 或 FreeBSD 代理上执行，前提是它们
+      <i>不是</i>
+      虚拟机，并且已安装 PostgreSQL（假设每个代理都有适当的标签 — 特别是，在虚拟机中运行的每个代理都必须具有
+      <code>vm</code>
+      标签，才能使此示例按预期工作）
+    </dd>
+  </dl>
+</div>

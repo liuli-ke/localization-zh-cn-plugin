@@ -1,7 +1,13 @@
 <div>
-  标签用来对多节点分组,标记之间用空格分隔.例如'refression java6'将会把一个节点标记上'regression'和'java6'.
-
-  <p> 
-  举例来说,如果你有多个Windows系统的构建节点并且你的Job也需要在Windows系统上运行,那么你可以配置所有的Windows系统节点都标记为'windows',
-  然后把Job也标记为'windows'.这样的话你的Job就不会运行在除了Windows节点以外的其它节点之上了.
+  标签（或标记）用于将多个代理分组到一个逻辑组中。
+  <p>
+    例如，如果您有多个 Windows 代理，并且有一个必须在 Windows 上运行的任务，那么您可以配置所有 Windows 代理都带有标签 <code>windows</code>，然后将该任务绑定到此标签。
+    <br>
+    这样可以确保您的任务在其中一个 Windows 代理上运行，但不会在没有此标签的任何代理上运行。
+  <p>
+    标签不一定代表代理上的操作系统；您也可以使用标签来标注 CPU 架构，或者某个特定工具已安装在代理上。
+  <p>
+    多个标签必须以空格分隔。例如，<code>windows docker</code> 会为代理分配两个标签：<code>windows</code> 和 <code>docker</code>。
+  <p>
+    标签可以包含任何非空格字符，但您应避免使用特殊字符，例如 <code>!&amp;|&lt;&gt;()</code> 中的任何一个，因为 Jenkins 的其他功能允许定义标签表达式，在这些表达式中这些字符可能会被使用。
 </div>

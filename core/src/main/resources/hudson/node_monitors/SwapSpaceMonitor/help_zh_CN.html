@@ -1,0 +1,15 @@
+<div>
+  此监视器会检查可用虚拟内存（也称为<code>交换空间</code>）。
+  <p>交换空间的具体定义取决于平台。</p>
+  <ul>
+    <li>
+      在 Windows 上，这是页面文件的可用空间。由于 Windows 可以自动增加页面文件大小，因此该值的意义不大。
+    </li>
+    <li>
+      在 Linux 上，该值从 <code>/proc/meminfo</code> 获取。
+    </li>
+    <li>
+      对于其他 Unix 系统，该值通过 <code>top</code> 命令获取。
+    </li>
+  </ul>
+</div>

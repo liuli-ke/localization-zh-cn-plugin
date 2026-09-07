@@ -1,0 +1,24 @@
+<div>
+  配置 Jenkins 以轮询 SCM 中的变更。
+
+  <p>
+    请注意，对于 CVS 来说，这将是一个开销较大的操作，因为每次轮询都需要 Jenkins 扫描整个工作区并与服务器进行验证。考虑设置“推送”触发器来避免这种开销，如
+    <a href="https://www.jenkins.io/redirect/scm-change-trigger">
+      本文档
+    </a>
+    所述。
+  </p>
+
+  <p>
+    默认情况下，调度计划在 Jenkins 控制器的时区中进行评估。要使用不同的时区，请在调度字段的第一行使用
+    <code>TZ=</code>
+    后跟时区 ID 来指定，例如：
+  </p>
+  <pre>
+TZ=Europe/London
+H/15 * * * *
+</pre>
+  <p>
+    有关完整的调度语法和支持的时区 ID 列表，请参阅“定期构建”触发器的帮助。
+  </p>
+</div>

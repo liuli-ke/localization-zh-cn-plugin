@@ -1,0 +1,21 @@
+<div>
+  提供类似
+  <a href="https://zh.wikipedia.org/wiki/Cron">cron</a>
+  的功能，定期执行项目。
+
+  <p>
+    这个功能主要是让 Jenkins 取代 cron，而且
+    <b>持续构建软件项目并不是理想选项</b>
+    。 大家第一次接触持续集成 (Continuous Integration; CI) 时，常会有 Nightly 或
+    Weekly 构建的刻板印象，认为就该用这个功能为构建挑选良辰吉时。 但是，CI
+    的中心思想是...不是啦，CI
+    的中心思想是在变动后尽快构建，让大家马上就能知道这次变更所造成的影响。
+    要达到这个目的，可以
+    <a href="https://www.jenkins.io/redirect/scm-change-trigger">
+      让 SCM 在变动后主动通知 Jenkins
+    </a>
+    。
+  </p>
+
+  <p>所以，在使用这个功能前，先停下来问问自己: “我到底想要干嘛？”</p>
+</div>
