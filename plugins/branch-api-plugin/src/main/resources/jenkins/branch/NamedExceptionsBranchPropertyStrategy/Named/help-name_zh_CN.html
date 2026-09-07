@@ -1,0 +1,42 @@
+<!--
+ ~ The MIT License
+ ~
+ ~ Copyright (c) 2013, CloudBees, Inc.
+ ~
+ ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+ ~ of this software and associated documentation files (the "Software"), to deal
+ ~ in the Software without restriction, including without limitation the rights
+ ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ ~ copies of the Software, and to permit persons to whom the Software is
+ ~ furnished to do so, subject to the following conditions:
+ ~
+ ~ The above copyright notice and this permission notice shall be included in
+ ~ all copies or substantial portions of the Software.
+ ~
+ ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ ~ THE SOFTWARE.
+ -->
+<div>
+    此例外所适用的分支名称。<strong>名称匹配不区分大小写。</strong>
+    该名称可以是以逗号分隔的名称列表。
+    名称可以包含 Ant 风格的通配符。在名称前加上 <code>!</code> 将反转匹配结果。（如果您的实际分支名称以 <code>!</code> 或 <code>\!</code> 开头，则需要在其前面加上 <code>\</code> 进行转义。转义仅适用于名称的第一个字符。）
+    一些示例：
+    <ul>
+        <li><code>production</code> 匹配且仅匹配一个分支</li>
+        <li><code>sandbox/*</code> 将匹配 <code>sandbox/acme</code>，但不匹配 <code>sandbox/coyote/wiley</code></li>
+        <li><code>sandbox/**</code> 将匹配 <code>sandbox/acme</code> 和 <code>sandbox/coyote/wiley</code></li>
+        <li><code>production,staging</code> 匹配两个特定的分支</li>
+        <li><code>production,staging*</code> 匹配 production 分支以及任何以 <code>staging</code> 开头的分支</li>
+        <li><code>!staging/**,staging/test/**</code> 匹配任何不是 staging 分支的分支，但会匹配 staging/test 分支</li>
+        <li><code>\!starts-with-invert</code> 匹配名称为 <code>!starts-with-invert</code> 的分支</li>
+        <li><code>\\!starts-with-escape</code> 匹配名称为 <code>\!starts-with-escape</code> 的分支</li>
+        <li><code>\escape-only-for-invert</code> 匹配名称为 <code>\escape-only-for-invert</code> 的分支</li>
+        <li><code>no-internal-!-escape</code> 匹配名称为 <code>no-internal-!-escape</code> 的分支</li>
+        <li><code>no-internal-\-escape</code> 匹配名称为 <code>no-internal-\-escape</code> 的分支</li>
+    </ul>
+</div>

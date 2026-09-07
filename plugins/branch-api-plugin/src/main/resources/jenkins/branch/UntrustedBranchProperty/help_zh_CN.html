@@ -1,0 +1,48 @@
+<!--
+ ~ The MIT License
+ ~
+ ~ Copyright (c) 2013, CloudBees, Inc.
+ ~
+ ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+ ~ of this software and associated documentation files (the "Software"), to deal
+ ~ in the Software without restriction, including without limitation the rights
+ ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ ~ copies of the Software, and to permit persons to whom the Software is
+ ~ furnished to do so, subject to the following conditions:
+ ~
+ ~ The above copyright notice and this permission notice shall be included in
+ ~ all copies or substantial portions of the Software.
+ ~
+ ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ ~ THE SOFTWARE.
+ -->
+<div>
+    表示该分支包含来自未对仓库具有写入权限的开发人员的代码更改。
+
+    <p>
+        此类代码可能包含恶意更改，因此此标志可作为信号，允许 Jenkins 中的其他插件设置更高程度的隔离以保护构建基础设施，并禁用具有副作用的操作，例如部署到服务器。
+
+    <p>
+        可信与非可信区分变得重要的一些示例：
+
+    <ul>
+        <li>
+            GitHub 拉取请求应被视为非可信，因为它们可以由<em>任何</em>用户创建。
+        </li>
+        <li>
+            类似 <tt>trunk、branches、tags、sandbox</tt> 的 Subversion 分支结构可能将
+            <tt>trunk、branches、tags</tt> 视为可信，而将 <tt>sandbox</tt> 视为非可信，
+            其中 Subversion 权限允许任何经过身份验证的用户对 <tt>sandbox</tt> 具有写入权限，
+            但允许项目团队提交到所有四个位置。
+        </li>
+        <li>
+            在仅由员工和承包商处理代码的闭源代码开发中，没有分支需要标记为非可信，
+            因为每次提交都来自一组已知人员。
+        </li>
+    </ul>
+</div>
