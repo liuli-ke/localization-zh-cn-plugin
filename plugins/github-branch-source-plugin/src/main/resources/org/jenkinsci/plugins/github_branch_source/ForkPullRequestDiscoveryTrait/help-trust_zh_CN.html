@@ -1,0 +1,33 @@
+<div>
+    <p>
+        拉取请求的一大优势在于，任何对仓库具有读取权限的人都可以复刻它，向其复刻提交一些更改，然后针对原始仓库创建包含这些更改的拉取请求。
+        源代码管理中存储着一些重要文件。例如，<code>Jenkinsfile</code> 可能包含用于沙箱化拉取请求的配置细节，以缓解恶意拉取请求的风险。
+        为了防止恶意拉取请求本身修改 <code>Jenkinsfile</code> 以移除保护措施，您可以定义针对来自复刻的拉取请求的信任策略。
+    </p>
+    <p>
+        其他插件可以扩展可用的信任策略。默认策略包括：
+    </p>
+    <dl>
+        <dt>无人</dt>
+        <dd>
+            来自复刻的拉取请求都将被视为不受信任。这意味着当 Jenkins 需要受信任的文件（例如 <code>Jenkinsfile</code>）时，该文件的内容将从源仓库的目标分支获取，而不是从复刻仓库的拉取请求分支获取。
+        </dd>
+        <dt>协作者</dt>
+        <dd>
+            来自源仓库<a href="https://developer.github.com/v3/repos/collaborators/" target="_blank">协作者</a>的拉取请求将被视为受信任，而来自复刻仓库的所有其他拉取请求将被视为不受信任。
+            请注意，如果 Jenkins 用于扫描仓库的凭证没有查询源仓库协作者列表的权限，则只有源账户会被视为受信任——即此时将回退为 <code>无人</code> 策略。
+            <strong>注意：</strong>所有协作者均受信任，即使他们只是具有读取权限的团队成员。
+        </dd>
+        <dt>所有人</dt>
+        <dd>
+            来自复刻的所有拉取请求都将被视为受信任。<strong>注意：</strong>如果在 GitHub 上托管的公共仓库中使用此选项，则可能带来安全风险。
+        </dd>
+        <dt>来自具有管理员或写入权限的用户</dt>
+        <dd>
+            当且仅当复刻所有者对源仓库具有管理员或写入权限时，来自复刻的拉取请求才会被视为受信任。
+            <strong>这是推荐的策略。</strong>
+            请注意，此策略需要
+            <a href="https://developer.github.com/v3/repos/collaborators/#review-a-users-permission-level" target="_blank">审查用户权限级别</a> API，因此在 GitHub Enterprise Server 2.12 之前的版本中，此策略等同于信任 <strong>无人</strong>。
+        </dd>
+    </dl>
+</div>

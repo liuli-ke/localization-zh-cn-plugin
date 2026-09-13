@@ -1,17 +1,16 @@
 <div>
-    发现 Pull Request 的策略
+    发现 Pull Request 的策略：
     <dl>
-        <dt>合并该 Pull Request 到当前目标分支的版本</dt>
-        <dd>
-            一次发现操作，找到要合并到当前目标分支的 Pull Request。
+        <dt>将 Pull Request 与当前目标分支修订版合并</dt>
+        <dd>每次扫描发现每个 Pull Request 一次，发现的修订版对应与目标分支当前修订版合并后的结果。
+            请注意，向目标分支推送将触发新的拉取请求构建。
         </dd>
-        <dt>当前 Pull Request 的版本</dt>
-        <dd>
-            一次发现操作，找到相对于其自己修改的 Pull Request。
+        <dt>当前 Pull Request 修订版</dt>
+        <dd>每次扫描发现每个 Pull Request 一次，发现的修订版对应 Pull Request 头部修订版，不进行合并。
         </dd>
-        <dt>当前 Pull Request 的版本和已经与目标分支合并了的 Pull Request</dt>
-        <dd>
-            两次发现操作，第一次找到要合并到当前目标分支的 Pull Request，紧接着第二次并行的找到相对于其自己修改的 Pull Request。
+        <dt>同时检查当前 Pull Request 修订版以及与当前目标分支修订版合并后的结果</dt>
+        <dd>每个 Pull Request 被发现两次。第一次发现的修订版对应每次扫描中与目标分支当前修订版合并的结果。
+            第二次并行发现的修订版对应 Pull Request 头部修订版，不进行合并。
         </dd>
     </dl>
 </div>
