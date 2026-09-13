@@ -23,9 +23,6 @@ jobs:
       - name: Fix git safe.directory
         run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
-      - name: Build with Maven
-        run: mvn clean package -DskipTests   # 根据实际需要调整
-
       - name: Calculate version
         id: version
         run: |
@@ -37,6 +34,17 @@ jobs:
           VERSION="${COMMIT_COUNT}.v${SHORT_HASH}"
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
           echo "Version computed: $VERSION"
+
+      - name: Set version in pom.xml
+        run: |
+          VERSION="${{ steps.version.outputs.VERSION }}"
+          # 只替换 999999-SNAPSHOT（含父工程和本工程），避免误伤其它字符串
+          sed -i "s/999999-SNAPSHOT/${VERSION}/g" pom.xml
+          echo "----- 替换后 pom.xml 中相关版本信息 -----"
+          grep -n "<version>" pom.xml | head -20
+
+      - name: Build with Maven
+        run: mvn clean package -DskipTests
 
       - name: Locate HPI file
         id: hpi
@@ -61,7 +69,7 @@ jobs:
           tag_name: ${{ steps.version.outputs.VERSION }}
           name: ${{ steps.version.outputs.VERSION }}
           body: "从提交自动构建 ${{ github.sha }}"
-          target_commitish: ${{ github.sha }}   # 或指定固定 commit，如 d967d49...
+          target_commitish: ${{ github.sha }}
           files: |
             target/localization-zh-cn.hpi
             md5sum
